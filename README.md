@@ -24,7 +24,6 @@ $ oc create -f openshift4-debug.yaml
 namespace/openshift4-debug created
 serviceaccount/openshift4-debug created
 securitycontextconstraints.security.openshift.io/openshift4-debug created
-imagestream.image.openshift.io/openshift4-debug created
 ```
 
 This creates a number of items within your cluster, notably a namespace, a service account, a security context constraint, and an image stream.  The namespace should encompass all entities from the `openshift4-debug` repository including users, images, and utilities deployed.  The service account and security context restraint are a carte blanche access to the cluster by this user, including the node's root filesystems.  Some utilities that monitor node performance require this.
@@ -35,6 +34,9 @@ From there, read on how to apply utilities to your `openshift4-debug` project wi
 
 ## Utilities
 Utilities may vary greatly in behavior and setup, and instructions for configuration are provided by the respective utility.  Select a utility below to learn more and see how to deploy it to your `openshift4-debug` project on your cluster.
+
+### [collectl](utilities/collectl/)
+A robust perl application that collects ongoing performance data from various subsystems for playback and analysis.
 
 ## Cleaning Up
 When `openshift4-debug` has outlived it's usefulness, remove it entirely from the cluster like so:

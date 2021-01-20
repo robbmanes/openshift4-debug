@@ -42,10 +42,3 @@ seLinuxContext:
   type: RunAsAny
 seccompProfiles:
 - '*'
----
-apiVersion: v1
-kind: ImageStream
-metadata:
-  name: openshift4-debug
-  labels:
-    app: openshift4-debug
