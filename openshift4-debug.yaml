@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift4-debug
+  labels:
+    app: openshift4-debug
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: openshift4-debug
+  namespace: openshift4-debug
+  labels:
+    app: openshift4-debug
+---
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: openshift4-debug
+  namespace: openshift4-debug
+  labels:
+    app: openshift4-debug
+allowHostDirVolumePlugin: true
+allowHostIPC: true
+allowHostNetwork: true
+allowHostPID: true
+allowHostPorts: true
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
+allowedCapabilities:
+- '*'
+allowedUnsafeSysctls:
+- '*'
+fsGroup:
+  type: RunAsAny
+users:
+  - system:serviceaccount:openshift4-debug:openshift4-debug
+readOnlyRootFilesystem: false
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+seccompProfiles:
+- '*'
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: openshift4-debug
+  labels:
+    app: openshift4-debug
