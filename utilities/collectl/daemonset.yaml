@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: collectl
+  namespace: openshift4-debug
+  labels:
+    app: openshift4-debug
+spec:
+  selector:
+    matchLabels:
+      app: collectl
+  template:
+    metadata:
+      labels:
+        app: collectl
+    spec:
+      nodeSelector:
+        collectl: "true"
+      containers:
+      - name: collectl
+        image: image-registry.openshift-image-registry.svc:5000/openshift4-debug/collectl
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: 400Mi
+          requests:
+            cpu: 100m
+            memory: 400Mi
+        volumeMounts:
+        - mountPath: /dev/mem
+          name: mem
+        - mountPath: /sys
+          name: sys
+        - mountPath: /var/log
+          name: logs
+        securityContext:
+          runAsUser: 0
+          privileged: true
+      volumes:
+      - name: mem
+        hostPath:
+          path: /dev/mem
+          type: CharDevice
+      - name: sys
+        hostPath:
+          path: /sys
+          type: Directory
+      - name: logs
+        hostPath:
+          path: /var/log
+          type: Directory
+      hostPID: true
+      hostNetwork: true
+      hostIPC: true
+      serviceAccount: openshift4-debug
+      serviceAccountName: openshift4-debug
