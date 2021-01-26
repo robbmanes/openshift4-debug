@@ -38,6 +38,9 @@ Utilities may vary greatly in behavior and setup, and instructions for configura
 ### [collectl](utilities/collectl/)
 A robust perl application that collects ongoing performance data from various subsystems for playback and analysis.
 
+### [tcpdump](utilities/tcpdump/)
+The tcpdump utility allows you to perform automated packet captures directly on nodes.
+
 ## Cleaning Up
 When `openshift4-debug` has outlived it's usefulness, remove it entirely from the cluster like so:
 

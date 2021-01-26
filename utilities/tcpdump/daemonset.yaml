@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: tcpdump
+  namespace: openshift4-debug
+  labels:
+    app: openshift4-debug
+spec:
+  selector:
+    matchLabels:
+      app: tcpdump
+  template:
+    metadata:
+      labels:
+        app: tcpdump
+    spec:
+      nodeSelector:
+        tcpdump: "true"
+      containers:
+      - name: collectl
+        image: registry.redhat.io/rhel8/support-tools:latest
+        command: ["/root/bin/tcpdump-entrypoint.sh"]
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: 600Mi
+          requests:
+            cpu: 200m
+            memory: 600Mi
+        volumeMounts:
+        - mountPath: /var/log
+          name: logs
+        - mountPath: /root/bin/
+          name: tcpdump-entrypoint
+        securityContext:
+          runAsUser: 0
+          privileged: true
+        env:
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+      volumes:
+      - name: logs
+        hostPath:
+          path: /var/log
+          type: Directory
+      - name: tcpdump-entrypoint
+        configMap:
+          name: tcpdump-entrypoint
+          defaultMode: 0777
+      hostPID: true
+      hostNetwork: true
+      hostIPC: true
+      serviceAccount: openshift4-debug
+      serviceAccountName: openshift4-debug
