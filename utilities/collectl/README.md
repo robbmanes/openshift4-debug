@@ -4,6 +4,13 @@ A robust perl application that collects ongoing performance data from various su
 This utility can be deployed to your [Red Hat OpenShift Container Platform 4](https://www.redhat.com/en/openshift-4) cluster to gather in-depth per-node performance metrics.
 
 ## Deployment
+Prior to running any of the below commands, please ensure you have performed the steps in the [root of this project](../README.md).
+
+In addition, ensure you are performing all of the above steps in the `openshift4-debug` project created by the above steps:
+```bash
+$ oc project openshift4-debug
+```
+
 To deploy the collectl utility to your OpenShift 4 cluster, declare a new `imageStream` with the following command from inside of this directory:
 ```bash
 $ oc create -f imagestream.yaml
