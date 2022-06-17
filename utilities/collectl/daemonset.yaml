@@ -14,6 +14,12 @@ spec:
       labels:
         app: collectl
     spec:
+      # these toleration are to have the daemonset runnable on control plane nodes
+      # Uncomment them if you want control plane nodes to run DS pods
+      #tolerations:
+      #- key: node-role.kubernetes.io/master
+      #  operator: Exists
+      #  effect: NoSchedule
       nodeSelector:
         collectl: "true"
       containers:
