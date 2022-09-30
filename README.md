@@ -46,16 +46,10 @@ When `openshift4-debug` has outlived it's usefulness, remove it entirely from th
 
 ```bash
 # Remove all running utilities
-$ oc delete all -l=app=openshift4-debug
+$ oc -n openshift4-debug delete all -l=app=openshift4-debug
 
-# Delete the serviceAccount
-$ oc delete sa openshift4-debug
-
-# Delete the securityContextConstraint
-$ oc delete scc openshift4-debug
-
-# Delete the namespace
-$ oc delete ns openshift4-debug
+# Delete initial resources
+$ oc delete -f openshift4-debug.yaml
 ```
 
 # Contributing
