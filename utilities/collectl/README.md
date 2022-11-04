@@ -37,6 +37,16 @@ collectl-1   Docker   Dockerfile   Complete   11 minutes ago   2m1s
 ```
 
 Once the build is completed, deploy the `DaemonSet`:
+
+> Note: If the tool has to run on the control plane, please edit the file `daemonset.yaml` and uncomment the following lines to allow for the needed tolerations:
+
+```bash
+      #tolerations:
+      #- key: node-role.kubernetes.io/master
+      #  operator: Exists
+      #  effect: NoSchedule
+```
+
 ```bash
 $ oc create -f daemonset.yaml
 daemonset.apps/collectl created
