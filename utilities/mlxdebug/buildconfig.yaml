@@ -1,0 +1,28 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: mlxdebug
+  namespace: openshift4-debug
+  labels:
+    app: openshift4-debug
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: mlxdebug:latest
+  source:
+    dockerfile: |
+      FROM registry.access.redhat.com/ubi8/ubi:8.7-1026
+      RUN yum install -y \
+        libibverbs \
+        infiniband-diags
+    type: Dockerfile
+    configMaps:
+    - configMap:
+        name: mlxdebug-entrypoint
+      destinationDir: entrypoint
+  strategy:
+    dockerStrategy: {}
+    type: Docker
+  triggers:
+  - type: ConfigChange

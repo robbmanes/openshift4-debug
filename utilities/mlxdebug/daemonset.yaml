@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: mlxdebug
+  namespace: openshift4-debug
+  labels:
+    app: openshift4-debug
+spec:
+  selector:
+    matchLabels:
+      app: mlxdebug
+  template:
+    metadata:
+      labels:
+        app: mlxdebug
+    spec:
+      # these toleration are to have the daemonset runnable on control plane nodes
+      # Uncomment them if you want control plane nodes to run DS pods
+      #tolerations:
+      #- key: node-role.kubernetes.io/master
+      #  operator: Exists
+      #  effect: NoSchedule
+      nodeSelector:
+        mlxdebug: "true"
+      containers:
+      - name: mlxdebug
+        image: image-registry.openshift-image-registry.svc:5000/openshift4-debug/mlxdebug
+        imagePullPolicy: Always
+        command: ['sh', '-c', 'sleep infinity']
+        resources:
+          limits:
+            memory: 400Mi
+          requests:
+            cpu: 100m
+            memory: 400Mi
+        volumeMounts:
+        - mountPath: /dev/mem
+          name: mem
+        - mountPath: /sys
+          name: sys
+        securityContext:
+          runAsUser: 0
+          privileged: true
+      volumes:
+      - name: mem
+        hostPath:
+          path: /dev/mem
+          type: CharDevice
+      - name: sys
+        hostPath:
+          path: /sys
+          type: Directory
+      hostPID: true
+      hostNetwork: true
+      hostIPC: true
+      serviceAccount: openshift4-debug
+      serviceAccountName: openshift4-debug
