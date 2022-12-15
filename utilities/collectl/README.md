@@ -19,7 +19,7 @@ imagestream.image.openshift.io/collectl created
 
 Then add the entrypoint as a `configMap`:
 ```bash
-$ oc create configmap collectl-entrypoint --from-file entrypoint.sh
+$ oc create -f configmap-entrypoint.yaml
 configmap/collectl-entrypoint created
 ```
 
