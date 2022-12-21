@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: app-logrotate
 spec:
-  schedule: "* * 7 * *"
+  schedule: "* * */2 * *"
   concurrencyPolicy: Replace
   jobTemplate:
     spec:
