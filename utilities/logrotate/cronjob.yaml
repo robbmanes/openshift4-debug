@@ -18,6 +18,9 @@ spec:
               mountPath: /etc/logrotate.conf
             - name: logs
               mountPath: /var/log/
+            securityContext:
+              runAsUser: 0
+              privileged: true
           nodeSelector:
             collectl: "true"
           restartPolicy: Never
