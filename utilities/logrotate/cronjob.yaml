@@ -17,6 +17,8 @@ spec:
               mountPath: /etc/logrotate.conf
             - name: app-logs
               mountPath: /var/log/
+          nodeSelector:
+            collectl: "true"
           volumes:
           - name: logrotate-conf
             configMap:
