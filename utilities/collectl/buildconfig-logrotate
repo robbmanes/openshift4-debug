@@ -13,8 +13,8 @@ spec:
   source:
     dockerfile: |
       FROM registry.access.redhat.com/ubi8
-      RUN yum install logrotate -y && \
-          yum clean all
+      RUN dnf install logrotate -y && \
+          dnf clean all
       COPY ./entrypoint /root/
       RUN chmod 741 /root/entrypoint.sh
       CMD ["/root/entrypoint.sh"]
