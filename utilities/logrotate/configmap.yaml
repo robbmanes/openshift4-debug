@@ -9,4 +9,5 @@ data:
       daily
       missingok
       rotate 14
+      maxage 14
     }
