@@ -29,5 +29,5 @@ spec:
             hostPath:
               path: /var/log
               type: Directory        
-        serviceAccount: openshift4-debug
-        serviceAccountName: openshift4-debug
+          serviceAccount: openshift4-debug
+          serviceAccountName: openshift4-debug
