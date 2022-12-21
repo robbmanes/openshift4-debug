@@ -1,4 +1,4 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: app-logrotate
@@ -15,10 +15,11 @@ spec:
             volumeMounts:
             - name: logrotate-conf
               mountPath: /etc/logrotate.conf
-            - name: app-logs
+            - name: logs
               mountPath: /var/log/
           nodeSelector:
             collectl: "true"
+          restartPolicy: Never
           volumes:
           - name: logrotate-conf
             configMap:
@@ -26,6 +27,6 @@ spec:
           - name: logs
             hostPath:
             path: /var/log
-            type: Directory
+            type: Directory        
         serviceAccount: openshift4-debug
         serviceAccountName: openshift4-debug
