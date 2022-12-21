@@ -15,14 +15,8 @@ spec:
       FROM registry.access.redhat.com/ubi8
       RUN dnf install logrotate -y && \
           dnf clean all
-      COPY ./entrypoint /root/
-      RUN chmod 741 /root/entrypoint.sh
-      CMD ["/root/entrypoint.sh"]
+      CMD logrotate /etc/logrotate.conf 
     type: Dockerfile
-    configMaps:
-    - configMap:
-        name: logrotate-entrypoint
-      destinationDir: entrypoint
   strategy:
     dockerStrategy: {}
     type: Docker
