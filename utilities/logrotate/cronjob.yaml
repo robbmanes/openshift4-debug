@@ -14,7 +14,7 @@ spec:
             image: image-registry.openshift-image-registry.svc:5000/openshift4-debug/logrotate
             volumeMounts:
             - name: logrotate-conf
-              subpath: logrotate.conf
+              subPath: logrotate.conf
               mountPath: /etc/logrotate.conf
             - name: logs
               mountPath: /var/log/
