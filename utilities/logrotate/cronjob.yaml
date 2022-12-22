@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: app-logrotate
+spec:
+  schedule: "* * */2 * *"
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: logrotate
+            image: image-registry.openshift-image-registry.svc:5000/openshift4-debug/logrotate
+            volumeMounts:
+            - name: logrotate-conf
+              subPath: logrotate.conf
+              mountPath: /etc/logrotate.conf
+            - name: logs
+              mountPath: /var/log/
+            securityContext:
+              runAsUser: 0
+              privileged: true
+          nodeSelector:
+            collectl: "true"
+          restartPolicy: Never
+          volumes:
+          - name: logrotate-conf
+            configMap:
+              name: logrotate-config
+          - name: logs
+            hostPath:
+              path: /var/log
+              type: Directory        
+          serviceAccount: openshift4-debug
+          serviceAccountName: openshift4-debug

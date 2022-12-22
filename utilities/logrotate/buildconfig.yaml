@@ -1,0 +1,24 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: logrotate
+  namespace: openshift4-debug
+  labels:
+    app: openshift4-debug
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: logrotate:latest
+  source:
+    dockerfile: |
+      FROM registry.access.redhat.com/ubi8
+      RUN dnf install logrotate -y && \
+          dnf clean all
+      CMD logrotate /etc/logrotate.conf 
+    type: Dockerfile
+  strategy:
+    dockerStrategy: {}
+    type: Docker
+  triggers:
+  - type: ConfigChange

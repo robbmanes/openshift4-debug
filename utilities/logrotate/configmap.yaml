@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logrotate-config
+  namespace: openshift4-debug
+data:
+  logrotate.conf: |-
+    /var/log/collectl/*raw.gz {
+      daily
+      missingok
+      rotate 14
+      maxage 14
+    }
